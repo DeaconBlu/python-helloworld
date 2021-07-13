@@ -1,4 +1,4 @@
-name: ci
+name: Python-Helloworld
 
 on:
   push:
@@ -25,12 +25,14 @@ jobs:
           username: ${{ secrets.deaconblu }}
           password: ${{ secrets.01e0d00f-2e4a-4b23-8256-66d56d3f5059 }}
       -
-        name: Build and push
-        uses: docker/build-push-action@v2
+        name: Build and push Docker images
+        uses: docker/build-push-action@v2.6.1
         with:
           context: .
           push: true
           tags: user/app:latest
+          platforms: linux/amd64,linux/arm64
+          github-token: ${{ github.7b47c8c0b5ca95fa08d5fe5a8895889477ab1199c1e2d0483665f55a41228ae2 }}
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
