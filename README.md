@@ -1,3 +1,3 @@
-# This is the README for the "python-helloworld"
+# README for the "python-helloworld"
 
 python-helloworld
