@@ -1,13 +1,25 @@
-name: Python-Helloworld
+## MOVE THIS FILE to `.github/workflows/docker-build.yaml` TO EXECUTE IT
 
+# This is a basic workflow to help you get started with Actions
+
+name: Docker Build and Push
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
 on:
   push:
-    branches:
-      - 'master'
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  docker:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       -
         name: Checkout
@@ -20,7 +32,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
       -
         name: Login to DockerHub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v1 
         with:
           username: ${{ secrets.deaconblu }}
           password: ${{ secrets.01e0d00f-2e4a-4b23-8256-66d56d3f5059 }}
@@ -29,9 +41,10 @@ jobs:
         uses: docker/build-push-action@v2.6.1
         with:
           context: .
-          push: true
-          tags: user/app:latest
+          file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
+          push: true
+          tags: deaconblu/python-helloworld:latest
           github-token: ${{ github.7b47c8c0b5ca95fa08d5fe5a8895889477ab1199c1e2d0483665f55a41228ae2 }}
       -
         name: Image digest
